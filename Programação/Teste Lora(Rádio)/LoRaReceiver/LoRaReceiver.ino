@@ -1,11 +1,10 @@
-#include <SoftwareSerial.h>
 #include <SPI.h>
 #include <LoRa.h>
-#include <iostream>
+
 
 /* Configuração dos pinos
  *  Modulo | Placa (Esp-32/barramento)
- *  NSS    |   GPIO26  
+ *  NSS    |   GPIO2
  *  MOSI   |   GPIO23(MOSI)
  *  MISO   |   GPIO19(MISO)
  *  SCK    |   GPIO18(SCK)
@@ -21,7 +20,7 @@ void setup() {
 
   Serial.println("LoRa Receiver");
 
-  LoRa.setPins(26,13,14); // Setano Pinos SS, RST e DI00
+  LoRa.setPins(2,13,14); // Setano Pinos SS, RST e DI00
 
   if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
     Serial.println("Starting LoRa failed!");
