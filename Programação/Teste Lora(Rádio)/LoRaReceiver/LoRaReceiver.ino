@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 #include <SPI.h>
 #include <LoRa.h>
+#include <iostream>
 
 /* Configuração dos pinos
  *  Modulo | Placa (Esp-32/barramento)
@@ -15,7 +16,7 @@
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial);
 
   Serial.println("LoRa Receiver");
@@ -31,6 +32,7 @@ void setup() {
 void loop() {
   // try to parse packet
   int packetSize = LoRa.parsePacket();
+
   if (packetSize) {
     // received a packet
     Serial.print("Received packet '");
