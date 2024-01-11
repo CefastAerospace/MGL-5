@@ -26,6 +26,8 @@ void setup() {
   if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
     Serial.println("Starting LoRa failed!");
     while (1);
+  } else{
+    Serial.println("Lora Iniciado");
   }
 }
 
