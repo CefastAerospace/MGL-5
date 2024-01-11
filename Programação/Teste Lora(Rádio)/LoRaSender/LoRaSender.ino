@@ -13,6 +13,7 @@
  */
 
 int counter = 0;
+int testinho = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -20,7 +21,7 @@ void setup() {
 
   Serial.println("LoRa Sender");
 
-  LoRa.setPins(2,3,4); // Setano Pinos SS, RST e DI00
+ // LoRa.setPins(10,9,2); // Setano Pinos SS, RST e DI00
 
  if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
     Serial.println("Starting LoRa failed!");
@@ -39,9 +40,14 @@ void loop() {
   LoRa.beginPacket();
   LoRa.print("hello ");
   LoRa.print(counter);
+  if(testinho%10 == 0){
+  LoRa.print(" // teste+2 ");
+  LoRa.print(testinho);
+  }
   LoRa.endPacket();
 
   counter++;
+  testinho+=2;
 
   delay(5000);
 }
