@@ -4,9 +4,9 @@ import numpy as np
 video = int(input("Escolha um video:\n"))
 
 if(video == 1):
-    video_path = "MrsT.mp4"
+    video_path = r"D:\Facul\Aero\MGL-5\Programação\Imageamento\MrsT.gif"
 else:
-    video_path = "5XK0pnt.gif"
+    video_path = r"D:\Facul\Aero\MGL-5\Programação\Imageamento\5XK0pnt.gif"
 
 vid = cv2.VideoCapture(video_path) 
 
