@@ -1,0 +1,20 @@
+#define PWM 3
+#define START 5
+#define DIR 8
+#define BRAKE 10
+
+
+void setup() {
+  pinMode(DIR, OUTPUT);
+  pinMode(BRAKE, OUTPUT);
+  pinMode(PWM, OUTPUT);
+  analogWrite(PWM, 155);
+  digitalWrite(DIR, HIGH);
+  digitalWrite(START, HIGH);
+  digitalWrite(BRAKE, LOW);
+}
+
+void loop() {
+
+}
+
