@@ -1,24 +1,31 @@
-#define PWM 3
-#define START 5
-#define DIR 8
-#define BRAKE 10
-
+#define START A0
+#define BREAK A1
+#define DIRECTION A2
+#define PWM 8 
 
 void setup() {
-  pinMode(DIR, OUTPUT);
-  pinMode(BRAKE, OUTPUT);
-  pinMode(PWM, OUTPUT);
-  analogWrite(PWM, 155);
-  digitalWrite(DIR, HIGH);
-  digitalWrite(START, HIGH);
-  digitalWrite(BRAKE, LOW);
+  pinMode(PWM,OUTPUT);
+  pinMode(START,OUTPUT);
+  pinMode(BREAK,OUTPUT);
+  pinMode(DIRECTION,OUTPUT); 
+
+  digitalWrite(START,HIGH);
+  digitalWrite(BREAK,HIGH);
+  tone(PWM,26000);  //Velocidade do motor: 26KHz = 3900rpm
 }
 
 void loop() {
+  digitalWrite(BREAK,LOW);  //Freia
+  delay(1000);
 
+  digitalWrite(DIRECTION,LOW);  //Muda a direção para HORÁRIO 
+  digitalWrite(BREAK,HIGH);   //Libera o freio
+  delay(2000);
+
+  digitalWrite(BREAK,LOW);  //Freia
+  delay(1000);
+  
+  digitalWrite(DIRECTION,HIGH); //Muda a direção para ANTI-HORÁRIO
+  digitalWrite(BREAK,HIGH);   //Libera o freio
+  delay(2000);
 }
-
-#https://www.ti.com/product/LM2596
-#https://www.youtube.com/watch?v=AJQZFHJzwt4
-#https://br.mouser.com/datasheet/2/389/l78-1849632.pdf
-#https://pt.aliexpress.com/item/1005005191148235.html?gatewayAdapt=glo2bra
