@@ -148,7 +148,7 @@ void loop() {
   // }
 
 /**************************************************************************************/
-/* RGBS */
+/* RGBS */ // Muda de cor de acordo com a luminosidade captada pelo sensor
 
   if (percent < 50){
     setCorRGB(RED);
