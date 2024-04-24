@@ -1,12 +1,13 @@
-#include <SPI.h>
-#include <LoRa.h>
-#include "Adafruit_CCS811.h"
+#include <SPI.h> 
+// #include <LoRa.h>
+#include "Adafruit_CCS811.h"// expensaor de porta
 #include <Arduino.h>
-#include <MPU9250_WE.h>
-#include <Wire.h>
-#include <MCP23017.h>
-#include <BMx280I2C.h>
+#include <MPU9250_WE.h> //mpu Giro - Acl - MaG
+#include <Wire.h> //i2C
+#include <MCP23017.h> // Co2
+#include <BMx280I2C.h> //Barometro e temp
 #include <WiFi.h>
+#include "uFire_SHT20.h"
 
 
 #define MCP23017_ADDR 0x20
@@ -31,6 +32,7 @@ MCP23017 mcp = MCP23017(MCP23017_ADDR);
 Adafruit_CCS811 ccs;
 BMx280I2C bmx280(bmp280_ADDR);
 MPU9250_WE myMPU9250 = MPU9250_WE(MPU_ADDR);
+uFire_SHT20 sht20;
 
 void setup() {
   Serial.begin(115200);
@@ -45,6 +47,8 @@ void setup() {
   mcp.writeRegister(MCP23017Register::GPIO_A, 0x00);  //Reset port A 
   mcp.writeRegister(MCP23017Register::GPIO_B, 0x00);  //Reset port B
   mcp.write(0);
+
+  sht20.begin();
 
   Serial.println("CCS811 test");
 
@@ -75,16 +79,16 @@ void setup() {
   myMPU9250.autoOffsets();
   Serial.println("Done!");
 
-  Serial.println("LoRa Receiver");
+  // Serial.println("LoRa Receiver");
 
-  LoRa.setPins(2,13,14); // Setano Pinos SS, RST e DI00
+  // LoRa.setPins(2,13,14); // Setano Pinos SS, RST e DI00
 
-  if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
-    Serial.println("Starting LoRa failed!");
-    while (1);
-  } else{
-    Serial.println("Lora Iniciado");
-  }
+  // if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
+  //   Serial.println("Starting LoRa failed!");
+  //   while (1);
+  // } else{
+  //   Serial.println("Lora Iniciado");
+  // }
   
   myMPU9250.enableGyrDLPF();
   myMPU9250.setGyrDLPF(MPU9250_DLPF_6);
@@ -92,7 +96,7 @@ void setup() {
   myMPU9250.setGyrRange(MPU9250_GYRO_RANGE_250);
 
   // We start by connecting to a WiFi network
-/*
+
   Serial.println();
   Serial.println();
   Serial.print("Connecting to ");
@@ -111,45 +115,51 @@ void setup() {
   Serial.println(WiFi.localIP());
   
   server.begin();
-  */
+
 }
 
 void loop() {
-
+/*********************************************************************/
+/* Medição Luz */
   int sensorValue = analogRead(34);  // Lê o valor do sensor
-  float percent = map(sensorValue, 0, 1023, 0, 100);
-  float temp = bmx280.getTemperature();
+  float percent = map(sensorValue, 0, 4095, 0, 100);
 
-  // try to parse packet
-  int packetSize = LoRa.parsePacket();
 
-  if (packetSize) {
-    // received a packet
-    Serial.print("Received packet '");
+  Serial.print("Dados Cru da Luz:");
+  Serial.println(sensorValue);
+  Serial.print("Porcentagem luz:");
+  Serial.println(percent);
 
-    // read packet
-    while (LoRa.available()) {
-      Serial.print((char)LoRa.read());
-    }
+  // // try to parse packet
+  // int packetSize = LoRa.parsePacket();
 
-    // print RSSI of packet
-    Serial.print("' with RSSI ");
-    Serial.println(LoRa.packetRssi());
-  }
+  // if (packetSize) {
+  //   // received a packet
+  //   Serial.print("Received packet '");
 
-  if (temp < 23){
-    setCorRGB(BLUE);
-  } else if ( temp >=23 && temp < 26){
+  //   // read packet
+  //   while (LoRa.available()) {
+  //     Serial.print((char)LoRa.read());
+  //   }
+
+  //   // print RSSI of packet
+  //   Serial.print("' with RSSI ");
+  //   Serial.println(LoRa.packetRssi());
+  // }
+
+/**************************************************************************************/
+/* RGBS */
+
+  if (percent < 50){
+    setCorRGB(RED);
+  } else if ( percent >=50 && percent < 75){
     setCorRGB(PURPLE);
-  } else if (temp >= 26){
-    setCorRGB (RED);
+  } else if (percent >= 75){
+    setCorRGB (BLUE);
   }
 
-  if (!bmx280.measure())
-	{
-		Serial.println("could not start measurement, is a measurement already running?");
-		return;
-	}
+/**************************************************************************************/
+/* CO2 */
 
   if(ccs.available()){
     if(!ccs.readData()){
@@ -160,6 +170,26 @@ void loop() {
     }
   }
 
+/**************************************************************************************/
+/* Humidade */
+    Serial.println();
+    sht20.measure_all();
+//    Serial.println((String)sht20.tempC + "°C"); Juntar com as outras temp
+
+    Serial.println((String)sht20.RH + " %RH");
+    Serial.println((String)sht20.vpd() + " kPa VPD");
+    Serial.println();
+
+/**************************************************************************************/
+/* Barometro */
+  float temp = bmx280.getTemperature();
+
+  if (!bmx280.measure())
+	{
+		Serial.println("could not start measurement, is a measurement already running?");
+		return;
+	}
+
   do
 	{
 		delay(100);
@@ -168,28 +198,25 @@ void loop() {
 	Serial.print("Pressure: "); Serial.println(bmx280.getPressure());
 	Serial.print("Temperature: "); Serial.println(temp);
 
-	if (bmx280.isBME280())
-	{
-		Serial.print("Humidity: "); Serial.println(bmx280.getHumidity());
-	}
 
+/**************************************************************************************/
+/* Giroscopio */
   xyzFloat gyrRaw = myMPU9250.getGyrRawValues();
   xyzFloat corrGyrRaw = myMPU9250.getCorrectedGyrRawValues();
+  xyzFloat gValue = myMPU9250.getGValues();
   xyzFloat gyr = myMPU9250.getGyrValues();
-  
-  Serial.println("Gyroscope raw values (x,y,z):");
-  Serial.print(gyrRaw.x);
-  Serial.print("   ");
-  Serial.print(gyrRaw.y);
-  Serial.print("   ");
-  Serial.println(gyrRaw.z);
+  xyzFloat angle = myMPU9250.getAngles();
 
-  Serial.println("Corrected gyroscope raw values (x,y,z):");
-  Serial.print(corrGyrRaw.x);
+  float resultantG = myMPU9250.getResultantG(gValue);
+
+  Serial.println("Acceleration in g (x,y,z):");
+  Serial.print(gValue.x);
   Serial.print("   ");
-  Serial.print(corrGyrRaw.y);
+  Serial.print(gValue.y);
   Serial.print("   ");
-  Serial.println(corrGyrRaw.z);
+  Serial.println(gValue.z);
+  Serial.print("Resultant g: ");
+  Serial.println(resultantG);
 
   Serial.println("Gyroscope Data in degrees/s (x,y,z):");
   Serial.print(gyr.x);
@@ -199,10 +226,26 @@ void loop() {
   Serial.println(gyr.z);
   Serial.println(WiFi.localIP());
 
+  /* Angles are also based on the corrected raws. Angles are simply calculated by
+   angle = arcsin(g Value) */
+  Serial.print("Angle x  = ");
+  Serial.print(angle.x);
+  Serial.print("  |  Angle y  = ");
+  Serial.print(angle.y);
+  Serial.print("  |  Angle z  = ");
+  Serial.println(angle.z);
+
+  Serial.print("Orientation of the module: ");
+  Serial.println(myMPU9250.getOrientationAsString());
+
+  Serial.println();
+
   Serial.println("*********************************");
 
   delay(1000);
-/*
+
+/********************* Wifi ***********************************************************/
+
 WiFiClient client = server.available();   // listen for incoming clients
 
 if (client) {                             // if you get a client,
@@ -255,7 +298,9 @@ if (client) {                             // if you get a client,
   client.stop();
   Serial.println("Client Disconnected.");
 }
-*/  
+
+/**************************************************************************************************************************/
+
 }
 
 void setLed(uint8_t estado){
