@@ -1,4 +1,5 @@
-
+#include <SPI.h>
+#include <LoRa.h>
 #include "Adafruit_CCS811.h"
 #include <Arduino.h>
 #include <MPU9250_WE.h>
@@ -73,6 +74,17 @@ void setup() {
   delay(1000);
   myMPU9250.autoOffsets();
   Serial.println("Done!");
+
+  Serial.println("LoRa Receiver");
+
+  LoRa.setPins(2,13,14); // Setano Pinos SS, RST e DI00
+
+  if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
+    Serial.println("Starting LoRa failed!");
+    while (1);
+  } else{
+    Serial.println("Lora Iniciado");
+  }
   
   myMPU9250.enableGyrDLPF();
   myMPU9250.setGyrDLPF(MPU9250_DLPF_6);
@@ -107,6 +119,23 @@ void loop() {
   int sensorValue = analogRead(34);  // Lê o valor do sensor
   float percent = map(sensorValue, 0, 1023, 0, 100);
   float temp = bmx280.getTemperature();
+
+  // try to parse packet
+  int packetSize = LoRa.parsePacket();
+
+  if (packetSize) {
+    // received a packet
+    Serial.print("Received packet '");
+
+    // read packet
+    while (LoRa.available()) {
+      Serial.print((char)LoRa.read());
+    }
+
+    // print RSSI of packet
+    Serial.print("' with RSSI ");
+    Serial.println(LoRa.packetRssi());
+  }
 
   if (temp < 23){
     setCorRGB(BLUE);
