@@ -38,14 +38,15 @@ uFire_SHT20 sht20;
 /******************************************************************************************************/
 /* Subrotinas */
 
-  void conectado() {      
-  xyzFloat gValue = myMPU9250.getGValues();
-  xyzFloat gyr = myMPU9250.getGyrValues();
-  xyzFloat angle = myMPU9250.getAngles();
+  void conectado() {      //Sub-rotina para caso o servidor fique online
 
-    
-                                                              //Sub-rotina para caso o servidor fique online
-    sv.send(200, "text/html", html(sht20.tempC, bmx280.getPressure(), sht20.RH, sht20.dew_point(), ccs.geteCO2(), analogRead(34), gValue.x, gValue.y, gValue.z, angle.x, angle.y, angle.z, gyr.x, gyr.y, gyr.z));     //Envia ao servidor, em formato HTML, o nosso script, com os parâmetros de pressão e temperatura
+    xyzFloat gValue = myMPU9250.getGValues();
+    xyzFloat gyr = myMPU9250.getGyrValues();
+    xyzFloat angle = myMPU9250.getAngles();
+    int sensorValue = analogRead(34);  // Lê o valor do sensor
+    float percentluz = map(sensorValue, 0, 4095, 0, 100);
+
+    sv.send(200, "text/html", html(sht20.tempC, bmx280.getPressure(), sht20.RH, sht20.dew_point(), ccs.geteCO2(), percentluz, gValue.x, gValue.y, gValue.z, angle.x, angle.y, angle.z, gyr.x, gyr.y, gyr.z));     //Envia ao servidor, em formato HTML, o nosso script, com os parâmetros de pressão e temperatura
   }
   void nao_encontrado() {                                                           //Sub-rotina para caso seja retornado um erro
     sv.send(404, "text/plain", "Não encontrado");                                   //Retorna a mensagem de erro em caso de um retorno 404
@@ -177,7 +178,7 @@ uFire_SHT20 sht20;
       cd += "<td style=\"width: 23.1456%; height: 20px;\">Ponto de orvalho(ºC):</td>\n";
       cd += "<td style=\"width: 13.9906%; height: 20px;\"><a> " + String(pOrv) + " </a></td>\n";
       cd += "<td style=\"width: 20.0469%; height: 20px;\">Luminosidade (%):</td>\n";
-      cd += "<td style=\"width: 14.1316%; height: 20px;\"><a> " + String(map(lum, 0, 4095, 0, 100)) + " </a></td>\n";
+      cd += "<td style=\"width: 14.1316%; height: 20px;\"><a> " + String(lum) + " </a></td>\n";
       cd += "</tr>\n";
       cd += "</tbody>\n";
       cd += "</table>\n";
