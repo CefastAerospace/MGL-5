@@ -23,8 +23,8 @@ const uint8_t GREEN = 2;
 const uint8_t BLUE = 3;
 const uint8_t WHITE = 4;
 const uint8_t PURPLE = 5;
-const char* ssid     = "COVID_20";
-const char* password = "1c75a33b210";
+const char* ssid     = "Nokia 5.4";
+const char* password = "Arkhe151299";
 uint16_t mcpState = 0;
 #include <WebServer.h>
 
@@ -301,91 +301,91 @@ void setup() {
 }
 
 void loop() {
-/*********************************************************************/
-/* Medição Luz */
-  int sensorValue = analogRead(34);  // Lê o valor do sensor
-  float percent = map(sensorValue, 0, 4095, 0, 100);
+// /*********************************************************************/
+// /* Medição Luz */
+//   int sensorValue = analogRead(34);  // Lê o valor do sensor
+//   float percent = map(sensorValue, 0, 4095, 0, 100);
 
 
-  Serial.print("Dados Cru da Luz:");
-  Serial.println(sensorValue);
-  Serial.print("Porcentagem luz:");
-  Serial.println(percent);
+//   Serial.print("Dados Cru da Luz:");
+//   Serial.println(sensorValue);
+//   Serial.print("Porcentagem luz:");
+//   Serial.println(percent);
 
-  // // try to parse packet
-  // int packetSize = LoRa.parsePacket();
+//   // // try to parse packet
+//   // int packetSize = LoRa.parsePacket();
 
-  // if (packetSize) {
-  //   // received a packet
-  //   Serial.print("Received packet '");
+//   // if (packetSize) {
+//   //   // received a packet
+//   //   Serial.print("Received packet '");
 
-  //   // read packet
-  //   while (LoRa.available()) {
-  //     Serial.print((char)LoRa.read());
-  //   }
+//   //   // read packet
+//   //   while (LoRa.available()) {
+//   //     Serial.print((char)LoRa.read());
+//   //   }
 
-  //   // print RSSI of packet
-  //   Serial.print("' with RSSI ");
-  //   Serial.println(LoRa.packetRssi());
-  // }
+//   //   // print RSSI of packet
+//   //   Serial.print("' with RSSI ");
+//   //   Serial.println(LoRa.packetRssi());
+//   // }
 
-/**************************************************************************************/
-/* RGBS */ // Muda de cor de acordo com a luminosidade captada pelo sensor
+// /**************************************************************************************/
+// /* RGBS */ // Muda de cor de acordo com a luminosidade captada pelo sensor
 
-  if (percent < 50){
-    setCorRGB(RED);
-  } else if ( percent >=50 && percent < 75){
-    setCorRGB(PURPLE);
-  } else if (percent >= 75){
-    setCorRGB (BLUE);
-  }
+//   if (percent < 50){
+//     setCorRGB(RED);
+//   } else if ( percent >=50 && percent < 75){
+//     setCorRGB(PURPLE);
+//   } else if (percent >= 75){
+//     setCorRGB (BLUE);
+//   }
 
-/**************************************************************************************/
-/* CO2 */
+// /**************************************************************************************/
+// /* CO2 */
 
-  if(ccs.available()){
-    if(!ccs.readData()){
-      float co2 = ccs.geteCO2();
-      Serial.print("CO2: ");
-      Serial.print(ccs.geteCO2());
-      Serial.print("ppm, TVOC: ");
-      Serial.println(ccs.getTVOC());
-    }
-  }
+//   if(ccs.available()){
+//     if(!ccs.readData()){
+//       float co2 = ccs.geteCO2();
+//       Serial.print("CO2: ");
+//       Serial.print(ccs.geteCO2());
+//       Serial.print("ppm, TVOC: ");
+//       Serial.println(ccs.getTVOC());
+//     }
+//   }
 
-/**************************************************************************************/
-/* Humidade */
-    Serial.println();
-    sht20.measure_all();
-//    Serial.println((String)sht20.tempC + "°C"); Juntar com as outras temp
+// /**************************************************************************************/
+// /* Humidade */
+//     Serial.println();
+//     sht20.measure_all();
+// //    Serial.println((String)sht20.tempC + "°C"); Juntar com as outras temp
 
-    float temph = sht20.tempC;
-    float hum = sht20.RH;
-    float pOrv = sht20.dew_point();
+//     float temph = sht20.tempC;
+//     float hum = sht20.RH;
+//     float pOrv = sht20.dew_point();
 
-    Serial.println((String)sht20.RH + " %RH");
-    Serial.println((String)sht20.vpd() + " kPa VPD");
-    Serial.println();
+//     Serial.println((String)sht20.RH + " %RH");
+//     Serial.println((String)sht20.vpd() + " kPa VPD");
+//     Serial.println();
 
-/**************************************************************************************/
-/* Barometro */
+// /**************************************************************************************/
+// /* Barometro */
 
-  if (!bmx280.measure())
-	{
-		Serial.println("could not start measurement, is a measurement already running?");
-		return;
-	}
+//   if (!bmx280.measure())
+// 	{
+// 		Serial.println("could not start measurement, is a measurement already running?");
+// 		return;
+// 	}
 
-  do
-	{
-		delay(100);
-	} while (!bmx280.hasValue());
+//   do
+// 	{
+// 		delay(100);
+// 	} while (!bmx280.hasValue());
 
-  float tempb = bmx280.getTemperature();
-  float press = bmx280.getPressure();
+//   float tempb = bmx280.getTemperature();
+//   float press = bmx280.getPressure();
 
-	Serial.print("Pressure: "); Serial.println(press);
-	Serial.print("Temperature: "); Serial.println(temph);
+// 	Serial.print("Pressure: "); Serial.println(press);
+// 	Serial.print("Temperature: "); Serial.println(temph);
 
 
 /**************************************************************************************/
@@ -442,9 +442,9 @@ void loop() {
 
   Serial.println("*********************************");
 
-  delay(1000);
+  delay(10);
 
-  float medtemp = (temph + tempb + tempG)/3;  // Média das temperaturas
+// float medtemp = (temph + tempb + tempG)/3;  // Média das temperaturas
 
 /********************* Wifi ***********************************************************/
 

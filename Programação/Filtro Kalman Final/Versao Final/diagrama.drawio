@@ -1,0 +1,151 @@
+<mxfile host="Electron" modified="2024-05-12T22:32:54.295Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="VYpQVs8FrlBy-Q9bZMlB" version="23.1.5" type="device">
+  <diagram name="Página-1" id="We6DIrRDSuKnFCdGr0dg">
+    <mxGraphModel dx="874" dy="532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xnJiUDJUR9r2VYeulELD-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-1" target="xnJiUDJUR9r2VYeulELD-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-1" value="Programa" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="10" y="70" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-2" target="xnJiUDJUR9r2VYeulELD-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-2" value="Captura Inicial de Dados Para Inicializar a Comunicação" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-4" target="xnJiUDJUR9r2VYeulELD-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-4" value="Captura Primeiro Dado" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="294" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-6" target="xnJiUDJUR9r2VYeulELD-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-6" value="Captura Segundo Dado" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="440" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-8" target="xnJiUDJUR9r2VYeulELD-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-8" value="Calcula o Tempo de Amostragem baseado no primeiro e no segundo dado" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-10" target="xnJiUDJUR9r2VYeulELD-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-10" value="Calcular a Matriz F baseado no tempo de amostragem" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="770" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-12" target="xnJiUDJUR9r2VYeulELD-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-12" value="Calcula sua primeira previsao de dados usando a matriz F e o segundo dado capturado" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="940" y="315" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-14" target="xnJiUDJUR9r2VYeulELD-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-14" value="Calcula a matriz de covariancia baseado em covar_anterior" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="770" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-16" value="Etapa 1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="900" y="430" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-17" value="Etapa 2" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="85" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-18" value="Etapa 3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="800" y="630" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-19" target="xnJiUDJUR9r2VYeulELD-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-19" value="Calcula Ganho&lt;br&gt;Kalman" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-21" target="xnJiUDJUR9r2VYeulELD-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-21" target="xnJiUDJUR9r2VYeulELD-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-21" value="Já calculou a &lt;br&gt;covariância Inicial?" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="750" y="20" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-24" value="S" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="830" y="174" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-25" target="xnJiUDJUR9r2VYeulELD-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-25" value="Calcula a covariância inicial baseada no segundo dado&lt;br&gt;(Variável covar_anterior)" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="960" y="55" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-27" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="910" y="70" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-31" target="xnJiUDJUR9r2VYeulELD-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-31" value="Calcula Matriz R baseado em Segundo Dado" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="540" y="570" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-34" value="Etapa 4" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="350" y="630" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-38" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-35" target="xnJiUDJUR9r2VYeulELD-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-35" value="Captura Terceiro Dado" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-37" target="xnJiUDJUR9r2VYeulELD-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-37" value="Calcula Estimativa Final" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="395" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-39" target="xnJiUDJUR9r2VYeulELD-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-39" value="Calcula Nova Covariância" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="315" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-41" target="xnJiUDJUR9r2VYeulELD-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-41" value="Nova Covariância = covar_anterior&lt;br&gt;Estimativa Final = previsao_inicial" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-44" target="xnJiUDJUR9r2VYeulELD-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-44" target="xnJiUDJUR9r2VYeulELD-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-44" value="Já calculou a &lt;br&gt;previsão &lt;br&gt;inicial &lt;br&gt;dos dados?" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="765" y="290" width="130" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="xnJiUDJUR9r2VYeulELD-49" target="xnJiUDJUR9r2VYeulELD-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-49" value="Calcula previsao de dados usando a matriz F e &quot;previsao_inicial&quot;&amp;nbsp;" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="770" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-50" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="895" y="324" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-53" value="S" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="830" y="420" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xnJiUDJUR9r2VYeulELD-55" value="As perguntas serão analisadas &lt;br&gt;a partir de um flag chamado &quot;etapa_inicial&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="475" y="373" width="250" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
