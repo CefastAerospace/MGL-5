@@ -1,14 +1,14 @@
-#define START A0
-#define BREAK A1
-#define DIRECTION A2
-#define PWM 8 
+#define DIRECTION 2
+#define BREAK 3
+#define START 4
+#define PWM 5
 
 void setup() {
-  pinMode(PWM,OUTPUT);
+  pinMode(PWM, OUTPUT);
   pinMode(START,OUTPUT);
   pinMode(BREAK,OUTPUT);
   pinMode(DIRECTION,OUTPUT); 
-
+ 
   digitalWrite(START,HIGH);
   digitalWrite(BREAK,HIGH);
   //tone(PWM,26000);  //Velocidade do motor: 26KHz = 3900rpm
@@ -44,16 +44,10 @@ void freia(int x){
 }
 
 void acelera(){
-  for(int freq=0; freq <= 1000; freq+=100){
-    tone(PWM,freq);
-    delayMicroseconds(100);
-  }
+  tone(PWM,18000);
 }
 
 void desacelera(){
-  for(int freq=1000; freq >= 0; freq-=100){
-    tone(PWM,freq);
-    delayMicroseconds(100);
-  }
+    tone(PWM,0);
 }
 
