@@ -1,0 +1,18 @@
+#Keyword para a classe
+ReactionController  KEYWORD1
+BrushlessMotor      KEYWORD1
+LuxItem             KEYWORD1
+LuxList             KEYWORD1
+
+
+#Keyword para métodos
+
+setVelocidade   KEYWORD2
+gira            KEYWORD2
+paraGiro        KEYWORD2
+
+addLuxItem  KEYWORD2
+getLuxItem  KEYWORD2
+
+leituraAmbiente     KEYWORD2
+estabiliza          KEYWORD2
