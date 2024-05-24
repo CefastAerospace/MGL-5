@@ -92,6 +92,7 @@ void loop() {
 
     Serial.print("gx:");Serial.print(GYRO_X);Serial.print(" gy:");Serial.print(GYRO_Y);Serial.print(" gz:");Serial.print(GYRO_Z);
     Serial.print(" acx:");Serial.print(ACC_X);Serial.print(" acy:");Serial.print(ACC_Y);Serial.print(" acz:");Serial.println(ACC_Z);
+    
     //roll = (float)(GYRO_X-GYRO_X_OFF)/65.5;
     //pitch = (float)(GYRO_Y-GYRO_Y_OFF)/65.5;
     //yaw = (float)(GYRO_Z-GYRO_Z_OFF)/65.5;
