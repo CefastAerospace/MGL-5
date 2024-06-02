@@ -1,0 +1,26 @@
+#######################################
+# Sintaxe das Cores
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MPU6050_leitura         KEYWORD1
+
+#######################################
+# Métodos e Funções (KEYWORD2)
+#######################################
+
+atualiza_leitura_MPU    KEYWORD2
+set_sensi_acc	        KEYWORD2
+set_sensi_giro	        KEYWORD2
+getRotationX            KEYWORD2
+getRotationY            KEYWORD2
+getRotationZ            KEYWORD2
+getAccelerationX        KEYWORD2
+getAccelerationY        KEYWORD2
+getAccelerationZ        KEYWORD2
+getMotion6              KEYWORD2
+
+

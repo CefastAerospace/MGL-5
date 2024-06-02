@@ -1,52 +1,113 @@
 #include "ReactionController.h"
 
 // Construtor
-ReactionController::ReactionController(BrushlessMotor motor) {
-    this->motor = motor;
-    this->luxList = LuxList();
+ReactionController::ReactionController(int pwmPin, int startPin, int breakPin, int directionPin) :
+    // Lista de inicialização dos membros
+    sensor(73, -55, 44, MPU6050_ADDR, 16, 500), // Tres numeros sao os offsets do acc, depois o endereco do Mpu, Sensibilidade Acc=16G,Sensibilidade Giro=500,
+    motor(pwmPin, startPin, breakPin, directionPin),
+    luxList(),
+    luxAtual(),
+    toleranciaAngulo(5) // Tolerância padrão de 5 graus
+{}
+
+// Construtor vazio
+ReactionController::ReactionController() :
+    sensor(73, -55, 44, MPU6050_ADDR, 16, 500), // Tres numeros sao os offsets do acc, depois o endereco do Mpu, Sensibilidade Acc=16G,Sensibilidade Giro=500,
+    motor(),
+    luxList(),
+    luxAtual(),
+    toleranciaAngulo(5) // Tolerância padrão de 5 graus
+{}
+
+// Configura a sensibilidade do acelerômetro
+void ReactionController::setSensibilidadeAcc(char sensibilidade){
+    sensor.set_sensi_acc(sensibilidade);
 }
 
-// Método para leitura do ambiente
+// Configura a sensibilidade do giroscópio
+void ReactionController::setSensibilidadeGiro(int_least16_t sensibilidade){
+    sensor.set_sensi_giro(sensibilidade);
+}
+
+// Anexa os pinos ao motor
+void ReactionController::setMotorPins(int pwmPin, int startPin, int breakPin, int directionPin){
+    motor.anexaPinos(pwmPin, startPin, breakPin, directionPin);
+}
+
+// Define a velocidade de giro
+void ReactionController::setVelocidadeGiro(int velocidade){
+    motor.setVelocidade(velocidade);
+}
+
+// Define a tolerância de ângulo
+void ReactionController::setToleranciaAngulo(int tolerancia){
+    if(tolerancia < 0){
+        this->toleranciaAngulo = 0; return;
+    }
+    else if(tolerancia > 90){
+        this->toleranciaAngulo = 90; return;
+    }
+    toleranciaAngulo = tolerancia;
+}
+
+// Realiza a leitura dos angulos do ambiente
 void ReactionController::leituraAmbiente(){
-    estabiliza(0);
-    while(LuxAtual.angulo < 360){
-        estabiliza(luxAtual.angulo + 10);   // Gira 10 graus no sentido horário
-        luxList.add(luxAtual);  // Adiciona a leitura atual à lista
+    // estabilizado(0);
+    // while((luxAtual.angulo + toleranciaAngulo) < 360){
+    //     estabilizado(luxAtual.angulo + toleranciaAngulo);   // Gira para o próximo ângulo
+    //     luxList.addLuxItem(luxAtual);  // Adiciona a leitura atual à lista
     }
 }
 
-// Método para ler e atualizar o lux do ângulo atual
-void ReactionController::atualizaLuxAtual(){
+// Lê e atualiza o lux do ângulo atual
+void ReactionController::atualizaDados(){
 
-    // TODO: Implementar com o sensor MPU6050 e fotoresistor
+    // TODO: Implementar com o sensor MPU6050 e um fotoresistor
     // OBS: LuxAtual.angulo deve estar restrito a [0, 360]
-    // O ângulo deve aumentar no sentido HORÁRIO
+    // O ângulo deve aumentar no sentido ANTI_HORÁRIO
     // Reduzir a velocidade de giro se o intervalo de leitura for muito longo 
 
-    // luxAtual.angulo = sensor.getAngulo();
+    sensor.atualiza_leitura();
+
     // luxAtual.iluminancia = sensor.getIluminancia();
     // luxAtual.angulo = corrigeAngulo(luxAtual.angulo);
-
 }
 
-// Método para estabilizar o ângulo
-void ReactionController::estabiliza(int angulo){
-    // Corrige o ângulo fornecido
-    angulo = angulo % 360;
-    int diferenca;
-    do{
-        atualizaLuxAtual ();
-        diferenca = luxAtual.angulo - angulo;
-        if(diferenca < 0){
-            motor.gira(HORARIO);
-        } else {
-            motor.gira(ANTI_HORARIO);
+// Verifica se o satélite está posicionado no ângulo fornecido
+bool ReactionController::estabilizado(int angulo){
+    int anguloAtual = MPU6050_leitura::rad2deg(sensor.getYaw()); // ou roll
+
+    // Corrige os ângulos
+    anguloAtual = corrigeAngulo(anguloAtual);
+    angulo = corrigeAngulo(angulo);
+
+    int diferenca = anguloAtual - angulo;
+
+    /* Interrompe o giro do motor se a diferença estiver dentro da tolerância, 
+       e se o motor ainda não estiver parado */
+    // se a diferença estiver dentro da tolerância
+    if(abs(diferenca) < toleranciaAngulo){
+        if(motor.getEstado() != EstadoMotor::STOPPED){
+            motor.paraGiro();
+            return true;
+        }  
+
+    /* Se a diferença for NEGATIVA, gira o motor no sentido antihorário 
+        caso o motor ainda não esteja girando neste sentido */
+    } else if(diferenca < 0){
+        if(motor.getEstado() != EstadoMotor::ROTATING_COUNTER_CLOCKWISE){
+            motor.gira(ANTI_HORARIO);   // O ângulo atual deve aumentar no sentido ANTI-HORÁRIO
         }
-    } while(abs(diferenca) > 5); // 5 graus de tolerância
-    motor.paraGiro();
+
+    /* Se a diferença for POSITIVA, gira o motor no sentido horário 
+        caso o motor ainda não esteja girando neste sentido */
+    } else if (motor.getEstado() != EstadoMotor::ROTATING_CLOCKWISE){ 
+        motor.gira(HORARIO); // O ângulo atual deve diminuir no sentido HORÁRIO
+    }
+    return false;
 }
 
-// Método para corrigir o ângulo e restringi-lo ao intervalo [0, 360]
+// Corrige o ângulo e o restringe ao intervalo [0, 359]
 int ReactionController::corrigeAngulo(int angulo){
     angulo = angulo % 360; 
     return angulo < 0 ? angulo + 360 : angulo; // Corrige o ângulo negativo

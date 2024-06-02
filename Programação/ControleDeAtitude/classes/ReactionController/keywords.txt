@@ -1,0 +1,22 @@
+#######################################
+# Sintaxe das Cores
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ReactionController      KEYWORD1
+
+#######################################
+# Métodos e Funções (KEYWORD2)
+#######################################
+
+setMotorPins            KEYWORD2
+leituraAmbiente	        KEYWORD2
+atualizaDados	        KEYWORD2
+estabiliza              KEYWORD2
+setVelocidadeGiro       KEYWORD2
+setToleranciaAngulo     KEYWORD2
+
+

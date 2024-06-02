@@ -1,0 +1,20 @@
+#######################################
+# Sintaxe das Cores
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+BrushlessMotor       KEYWORD1
+
+#######################################
+# Métodos e Funções (KEYWORD2)
+#######################################
+
+anexaPinos          KEYWORD2
+gira	            KEYWORD2
+paraGiro            KEYWORD2
+setVelocidade       KEYWORD2
+getEstado           KEYWORD2
+

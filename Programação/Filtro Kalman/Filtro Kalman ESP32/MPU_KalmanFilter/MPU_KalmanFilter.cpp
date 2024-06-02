@@ -1,53 +1,26 @@
-/*
-    Escrito por Henrique Costa (https://github.com/riquetret)
-*/
-#include <Wire.h>
-#include <BasicLinearAlgebra.h>
-#include <cmath>
-using namespace BLA;
 
-#define BIT8 0x80
-#define BIT7 0x40
-#define BIT6 0x20
-#define BIT5 0x10
-#define BIT4 0x08
-#define BIT3 0x04
-#define BIT2 0x02
-#define BIT1 0x01
+#include "MPU_KalmanFilter.h"
 
-#define MPU6050_ADDR 0x69
-#define GRAVIDADE 9.80665
-#define SENSI_GIRO 65.5
-#define SENSI_ACC 2048.0
 
-char iter_salva=0; //Iterador para iterar sobre as matrizes
-unsigned long tempo_anterior,tempo_atual,t_amostra;bool etapa_inicial = true;
-int16_t GYRO_X,GYRO_Y,GYRO_Z,ACC_X,ACC_Y,ACC_Z;//Contagens LSB do MPU6050
-int16_t GYRO_X_OFF,GYRO_Y_OFF,GYRO_Z_OFF; //Offset/Erro para calibrar
+// Construtor
+MPU_KalmanFilter::MPU_KalmanFilter(){
+    iter_salva = 0;
+    etapa_inicial = true;
+    ACC_X_OFF = 73,ACC_Y_OFF = -55,ACC_Z_OFF = 44; //Offset/Erro para calibrar
+}
 
-//Gravidade UFMG = 9,7838163 m/s2, como sensibilidade = 2048LSB/g, sendo 1g = 9,80665m/s2, temos que Gravidade UFMG = 2043,231458LSB
-//Calibrando o offset abaixo para o sensor do Henrique 
-int16_t ACC_X_OFF = 73,ACC_Y_OFF = -55,ACC_Z_OFF = 44; //Offset/Erro para calibrar
 
-BLA::Matrix<6, 30> dados_sensor;
-BLA::Matrix<4, 1> previsao_final_resultado;
-BLA::Matrix<4, 4> covar_anterior;
-BLA::Matrix<4, 1> dados_anteriores;
-BLA::Matrix<4, 1> previsao_inicial;
-BLA::Matrix<4, 4> matriz_R;
-BLA::Matrix<4, 4> ganho_kalman;
-BLA::Matrix<4, 4> matriz_F;
+// ============== Funções genéricas ==============
 
-//Funcoes Genericas==========================================
-float deg2rad(float degrees) {
+float MPU_KalmanFilter::deg2rad(float degrees) {
     return degrees * M_PI / 180.0;
 }
 
-float rad2deg(float radians) {
+float MPU_KalmanFilter::rad2deg(float radians) {
     return radians * 180.0 / M_PI;
 }
 
-void desvio_padrao(float desvio[6]) {
+void MPU_KalmanFilter::desvio_padrao(float desvio[6]) {
     float media[6],acumulador;
     for (char i = 0; i < 6; i++)
     {
@@ -69,7 +42,8 @@ void desvio_padrao(float desvio[6]) {
     }
 }
 
-char iter_dados()
+
+char MPU_KalmanFilter::iter_dados()
 {
     if (iter_salva == 30)iter_salva = 0;
     else iter_salva = iter_salva+1;
@@ -77,13 +51,15 @@ char iter_dados()
     return iter_salva - 1;
 }
 
-char acessa_iter_anterior(){
+char MPU_KalmanFilter::acessa_iter_anterior(){
     if (iter_salva-1<0) return 29;
     else return iter_salva-1;
 }
 
-//Funcoes Formatacao Kalman==================================
-void formata_covar_inicial()
+
+// ============== Funções Formatação Kalman ==============
+
+void MPU_KalmanFilter::formata_covar_inicial()
 {
     float A_ccx = dados_sensor(3,0);
     float A_ccy = dados_sensor(4,0);
@@ -104,7 +80,7 @@ void formata_covar_inicial()
     covar_anterior(2,2) = dgiro*dgiro;covar_anterior(3,3) = covar_anterior(2,2);
 }
 
-float roll_pelo_acc(char coluna)
+float MPU_KalmanFilter::roll_pelo_acc(char coluna)
 {
     float A_ccx = dados_sensor(3,coluna);
     float A_ccy = dados_sensor(4,coluna);
@@ -113,7 +89,7 @@ float roll_pelo_acc(char coluna)
     return expressao;
 }
 
-float pitch_pelo_acc(char coluna)
+float MPU_KalmanFilter::pitch_pelo_acc(char coluna)
 {
     float A_ccx = dados_sensor(3,coluna);
     float A_ccy = dados_sensor(4,coluna);
@@ -122,7 +98,7 @@ float pitch_pelo_acc(char coluna)
     return expressao;
 }
 
-void formata_dados_entrada(char coluna)
+void MPU_KalmanFilter::formata_dados_entrada(char coluna)
 {
     dados_anteriores(0,0) = roll_pelo_acc(coluna);
     dados_anteriores(1,0) = pitch_pelo_acc(coluna);
@@ -130,7 +106,7 @@ void formata_dados_entrada(char coluna)
     dados_anteriores(3,0) = dados_sensor(1,coluna);
 }
 
-void novo_estado_dados_previsto()
+void MPU_KalmanFilter::novo_estado_dados_previsto()
 {
     previsao_inicial = matriz_F * dados_anteriores;
     previsao_inicial(0,0) = previsao_inicial(0,0) + pow(10,-12);
@@ -139,7 +115,7 @@ void novo_estado_dados_previsto()
     previsao_inicial(3,0) = previsao_inicial(3,0) + pow(10,-12); 
 }
 
-void novo_estado_covariancia_prevista()
+void MPU_KalmanFilter::novo_estado_covariancia_prevista()
 {
     covar_anterior=(matriz_F*covar_anterior)*~matriz_F;
     for (char i = 0; i < 4; i++)
@@ -152,7 +128,7 @@ void novo_estado_covariancia_prevista()
     }
 }
 
-void formata_matriz_R()
+void MPU_KalmanFilter::formata_matriz_R()
 {
     float desvios_padrao[6];
     desvio_padrao(desvios_padrao);
@@ -177,7 +153,7 @@ void formata_matriz_R()
     matriz_R(3,3) = dgiroy*dgiroy + pow(10,-12);
 }
 
-void calculo_ganho_kalman()
+void MPU_KalmanFilter::calculo_ganho_kalman()
 {
     BLA::Matrix<4, 4> soma,matriz_inversa;
     soma = covar_anterior + matriz_R;
@@ -193,7 +169,7 @@ void calculo_ganho_kalman()
     }
 }
 
-void calculo_previsao_final_resultado()
+void MPU_KalmanFilter::calculo_previsao_final_resultado()
 {
     BLA::Matrix<4, 1> diferenca = dados_anteriores-previsao_inicial;
     previsao_final_resultado = previsao_inicial + ganho_kalman * (diferenca);
@@ -208,8 +184,10 @@ void nova_matriz_covariancia_anterior()
     covar_anterior = (matriz_identidade-ganho_kalman)*covar_anterior;
 }
 
-//Funcoes Associadas a Leitura e Formatacao Inicial=========================
-void envia_i2c(char id,char registro,char informacao2=0,bool info2=false,char informacao1=0,bool info1=0){
+
+// ========== Funções associadas à leitura e formatação inicial ===========
+
+void MPU_KalmanFilter::envia_i2c(char id,char registro,char informacao2=0,bool info2=false,char informacao1=0,bool info1=0){
     Wire.beginTransmission(id);
     Wire.write(registro);
     if(info2==true)Wire.write(informacao2);
@@ -217,7 +195,7 @@ void envia_i2c(char id,char registro,char informacao2=0,bool info2=false,char in
     Wire.endTransmission();
 }
 
-void leitura_MPU(int16_t *VarX,int16_t *VarY,int16_t *VarZ,char id,char registrador){
+void MPU_KalmanFilter::leitura_MPU(int16_t *VarX,int16_t *VarY,int16_t *VarZ,char id,char registrador){
     envia_i2c(id,registrador);//Informa que deseja ler a partir do registro "registrador"
     Wire.requestFrom(MPU6050_ADDR,6);//Vamos Ler 6 Bytes em que cada informação tem 16 bits, logo 3*Gyros/Acc=48bits=6Bytes
 
@@ -227,7 +205,7 @@ void leitura_MPU(int16_t *VarX,int16_t *VarY,int16_t *VarZ,char id,char registra
     *VarZ = Wire.read()<<8 | Wire.read();
 }
 
-unsigned long formata_leitura()
+unsigned long MPU_KalmanFilter::formata_leitura()
 {
     float gx,gy,gz;       //rad/s em cada eixo
     float acx,acy,acz;    //Aceleracao em cada eixo[m/s^2]
@@ -251,7 +229,7 @@ unsigned long formata_leitura()
     return tempo;
 }
 
-void calibracao_MPU(int16_t *VarX,int16_t *VarY,int16_t *VarZ,int16_t *OffX,int16_t *OffY,int16_t *OffZ,char id,char registrador,int iteracoes)
+void MPU_KalmanFilter::calibracao_MPU(int16_t *VarX,int16_t *VarY,int16_t *VarZ,int16_t *OffX,int16_t *OffY,int16_t *OffZ,char id,char registrador,int iteracoes)
 {
     long int contagensX=0,contagensY=0,contagensZ=0;
     for(int i=0;i<iteracoes;i++){
@@ -265,7 +243,7 @@ void calibracao_MPU(int16_t *VarX,int16_t *VarY,int16_t *VarZ,int16_t *OffX,int1
     *OffZ = contagensZ/iteracoes;
 }
 
-void getRollPitch(float* ptr)
+void MPU_KalmanFilter::getRollPitch(float* ptr)
 {
     tempo_atual=formata_leitura(); // Segundo Dado e Captura do tempo da segunda leitura
     t_amostra = tempo_atual-tempo_anterior;
@@ -315,7 +293,7 @@ void getRollPitch(float* ptr)
     *(ptr+1) = pitch; //Angulo de Pitch
 }
 
-void prepara_dados()
+void MPU_KalmanFilter::prepara_dados()
 {
     Serial.begin(115200); //Leitura Serial em 115200 baud rate
     Wire.setClock(100000); //Clock I2C em 100kHz

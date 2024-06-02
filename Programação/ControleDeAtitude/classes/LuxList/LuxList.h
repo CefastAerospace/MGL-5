@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <LinkedList.h>
-#include "LuxItem/LuxItem.h"
+#include <LuxItem.h>
 
 // Classe que representa um mapa de iluminância por ângulo
 class LuxList {

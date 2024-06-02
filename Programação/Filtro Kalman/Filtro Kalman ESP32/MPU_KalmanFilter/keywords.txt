@@ -1,0 +1,7 @@
+# Palavras da classe
+MPU_KalmanFilter    keyword1
+
+# Palavras chave dos métodos
+prepara_dados       keyword2
+get_roll_pitch      keyword2
+

@@ -1,0 +1,1 @@
+Todos as pastas dentro de 'classes' devem ser coladas nas bibliotecas (pasta 'libraries') do arduino para o correto funcionamento do projeto 'motor.ino'
