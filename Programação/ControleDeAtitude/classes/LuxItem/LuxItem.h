@@ -5,8 +5,11 @@
 
 class LuxItem {
     public:
+        // Métodos públicos
         LuxItem(int iluminancia, int angulo);
         LuxItem();
+
+        // Atributos públicos
         int iluminancia;
         int angulo;
     private:

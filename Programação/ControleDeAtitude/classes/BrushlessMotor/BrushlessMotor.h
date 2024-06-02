@@ -18,8 +18,9 @@ class BrushlessMotor {
             ROTATING_COUNTER_CLOCKWISE
         };
 
-        BrushlessMotor(int pwmPin, int startPin, int breakPin, int directionPin);
-        BrushlessMotor();
+        // Métodos públicos
+        BrushlessMotor(int pwmPin, int startPin, int breakPin, int directionPin); // Construtor
+        BrushlessMotor();  // Construtor vazio
         void anexaPinos(int pwmPin, int startPin, int breakPin, int directionPin);
         void gira(bool sentido);
         void paraGiro();
@@ -27,14 +28,15 @@ class BrushlessMotor {
         EstadoMotor getEstado() const;
 
     private:
+        // Atributos privados
         int pwmPin;
         int startPin;
         int breakPin;
         int directionPin;
         int velocidadeGiro;
-
         EstadoMotor estado;
 
+        // Métodos privados
         void acelera(bool estado);
         void freia(bool estado);
         void start(bool estado);

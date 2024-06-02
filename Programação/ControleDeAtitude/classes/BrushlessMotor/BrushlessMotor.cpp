@@ -11,14 +11,14 @@ BrushlessMotor::BrushlessMotor(int pwmPin, int startPin, int breakPin, int direc
 
 // Construtor vazio
 BrushlessMotor::BrushlessMotor() :
-    pwmPin(0),
+    pwmPin(0),      // Inicializa os pinos com 0
     startPin(0),
     breakPin(0),
     directionPin(0),
     velocidadeGiro(DEFAULT_VELOCIDADE), // Velocidade padrão de giro
     estado(STOPPED)
 {
-    anexaPinos(pwmPin, startPin, breakPin, directionPin);
+    anexaPinos(pwmPin, startPin, breakPin, directionPin); // Anexa os pinos ao motor
 }
 
 // Informa o estado atual do motor
@@ -26,7 +26,7 @@ BrushlessMotor::EstadoMotor BrushlessMotor::getEstado() const{
     return estado;
 }
 
-// anexa os pinos ao motor
+// Anexa os pinos ao motor
 void BrushlessMotor::anexaPinos(int pwmPin, int startPin, int breakPin, int directionPin){
     this-> pwmPin = pwmPin;
     this-> startPin = startPin;
@@ -92,7 +92,7 @@ void BrushlessMotor::paraGiro(){
 
 // Altera a velocidade de giro do motor
 void BrushlessMotor::setVelocidade(int velocidade){
-    if(velocidade < 26000 && velocidade > 0)
+    if(velocidade <= 26000 && velocidade > 0)
         this->velocidadeGiro = velocidade;
 }
 

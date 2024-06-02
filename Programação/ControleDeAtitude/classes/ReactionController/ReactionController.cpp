@@ -56,7 +56,7 @@ void ReactionController::leituraAmbiente(){
     // while((luxAtual.angulo + toleranciaAngulo) < 360){
     //     estabilizado(luxAtual.angulo + toleranciaAngulo);   // Gira para o próximo ângulo
     //     luxList.addLuxItem(luxAtual);  // Adiciona a leitura atual à lista
-    }
+    //}
 }
 
 // Lê e atualiza o lux do ângulo atual
@@ -75,7 +75,7 @@ void ReactionController::atualizaDados(){
 
 // Verifica se o satélite está posicionado no ângulo fornecido
 bool ReactionController::estabilizado(int angulo){
-    int anguloAtual = MPU6050_leitura::rad2deg(sensor.getYaw()); // ou roll
+    int anguloAtual = MPU6050_leitura::rad2deg(sensor.getYaw()); // Lê o ângulo atual da rotação no eixo Z (Yaw) do sensor
 
     // Corrige os ângulos
     anguloAtual = corrigeAngulo(anguloAtual);
@@ -85,14 +85,13 @@ bool ReactionController::estabilizado(int angulo){
 
     /* Interrompe o giro do motor se a diferença estiver dentro da tolerância, 
        e se o motor ainda não estiver parado */
-    // se a diferença estiver dentro da tolerância
     if(abs(diferenca) < toleranciaAngulo){
         if(motor.getEstado() != EstadoMotor::STOPPED){
             motor.paraGiro();
             return true;
         }  
 
-    /* Se a diferença for NEGATIVA, gira o motor no sentido antihorário 
+    /* Se a diferença for NEGATIVA, gira o motor no sentido anti horário 
         caso o motor ainda não esteja girando neste sentido */
     } else if(diferenca < 0){
         if(motor.getEstado() != EstadoMotor::ROTATING_COUNTER_CLOCKWISE){

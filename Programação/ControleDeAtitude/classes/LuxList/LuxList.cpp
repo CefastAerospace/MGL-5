@@ -8,6 +8,7 @@ LuxList::LuxList() {
 bool LuxList::addLuxItem(LuxItem luxItem) {
     for (int i = 0; i < luxList.size(); i++) {
         LuxItem tmp = luxList.get(i);
+
         if (tmp.angulo == luxItem.angulo) {
             // Modifica apenas a iluminância do ângulo já existente na lista
             tmp.iluminancia = luxItem.iluminancia;
@@ -27,5 +28,5 @@ LuxItem LuxList::getLuxItem(int angulo) {
             return tmp;
         }
     }
-    return LuxItem(-1, 0);  // Retorna um item nulo
+    return LuxItem();  // Retorna um item nulo
 }

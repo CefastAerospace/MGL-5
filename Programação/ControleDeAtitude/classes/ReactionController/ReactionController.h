@@ -10,11 +10,12 @@
 
 class ReactionController {
     public:
-        // Cria um alias para o enum dentro de BrushlessMotor
+        // Cria um alias para referenciar o enum da classe BrushlessMotor
         using EstadoMotor = BrushlessMotor::EstadoMotor;
 
-        ReactionController(int pwmPin, int startPin, int breakPin, int directionPin);
-        ReactionController();
+        // Métodos públicos
+        ReactionController(int pwmPin, int startPin, int breakPin, int directionPin); // Construtor
+        ReactionController();  // Construtor vazio
         void setMotorPins(int pwmPin, int startPin, int breakPin, int directionPin);
         void leituraAmbiente();
         void atualizaDados();
@@ -25,12 +26,14 @@ class ReactionController {
         bool estabilizado(int angulo);
 
     private:
+        // Atributos privados
         MPU6050_leitura sensor;
         BrushlessMotor motor;
         LuxList luxList;
         LuxItem luxAtual;
         int toleranciaAngulo;
         
+        // Métodos privados
         int corrigeAngulo(int angulo);
     
 };

@@ -13,14 +13,15 @@
 // Construtor
 MPU6050_leitura::MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_off, char endereco, char acc_sensi, int_least16_t giro_sensi) :
     ACC_X_OFF(acx_off),
-    ACC_Y_OFF(acy_off),
+    ACC_Y_OFF(acy_off),         // Inicialização das variáveis
     ACC_Z_OFF(acz_off),
     gx(0), gy(0), gz(0),
     acx(0), acy(0), acz(0),
-    tempos({0, 0}), amostras({0, 0}),
+    tempos{0, 0}, amostras{0, 0},
     acumulador_yaw(0),
-    endereco_mpu(endereco)
+    endereco_mpu(endereco) 
 {
+    // Métodos de inicialização
     prepara_wire();
     set_config_energia();
     set_sensi_giro(giro_sensi);
@@ -91,30 +92,37 @@ void MPU6050_leitura::set_sensi_acc(char acc_sensi){
     }
 }
 
+// Retorna o valor do giroscópio no eixo X
 double MPU6050_leitura::getRotationX(){
     return this->gx;
 }
 
+// Retorna o valor do giroscópio no eixo Y
 double MPU6050_leitura::getRotationY(){
     return this->gy;
 }
 
+// Retorna o valor do giroscópio no eixo Z
 double MPU6050_leitura::getRotationZ(){
     return this->gz;
 }
 
+// Retorna o valor do acelerômetro no eixo X
 double MPU6050_leitura::getAccelerationX(){
     return this->acx;
 }
 
+// Retorna o valor do acelerômetro no eixo Y
 double MPU6050_leitura::getAccelerationY(){
     return this->acy;
 }
 
+// Retorna o valor do acelerômetro no eixo Z
 double MPU6050_leitura::getAccelerationZ(){
     return this->acz;
 }
 
+// Retorna o valor do Yaw (raotação em torno do eixo Z em radianos)
 double MPU6050_leitura::getYaw(){
     return this->acumulador_yaw;
 }
@@ -129,6 +137,7 @@ void MPU6050_leitura::getMotion6(int16_t *ax, int16_t *ay, int16_t *az, int16_t 
     *gz = this->gz;
 }
 
+// Envia informações via I2C
 void MPU6050_leitura::envia_i2c(char id, char registro, char informacao2, bool info2, char informacao1, bool info1) {
     Wire.beginTransmission(id);
     Wire.write(registro);
@@ -137,6 +146,7 @@ void MPU6050_leitura::envia_i2c(char id, char registro, char informacao2, bool i
     Wire.endTransmission();
 }
 
+// Lê informações via I2C e armazena nas variáveis
 void MPU6050_leitura::leitura_MPU_bruta(int16_t* VarX, int16_t* VarY, int16_t* VarZ, char id, char registrador) {
     envia_i2c(id, registrador); // Informa que deseja ler a partir do registro "registrador"
     Wire.requestFrom(id, 6); // Vamos Ler 6 Bytes em que cada informação tem 16 bits, logo 3*Gyros/Acc=48bits=6Bytes
@@ -147,6 +157,7 @@ void MPU6050_leitura::leitura_MPU_bruta(int16_t* VarX, int16_t* VarY, int16_t* V
     *VarZ = Wire.read() << 8 | Wire.read();
 }
 
+// Lê os valores brutos do acelerômetro e giroscópio e converte para valores reais
 void MPU6050_leitura::leitura_MPU() {
     leitura_MPU_bruta(&GYRO_X, &GYRO_Y, &GYRO_Z, endereco_mpu, 0x43); // Leitura GYRO
     leitura_MPU_bruta(&ACC_X, &ACC_Y, &ACC_Z, endereco_mpu, 0x3B); // Leitura ACC
@@ -160,8 +171,8 @@ void MPU6050_leitura::leitura_MPU() {
     acz = static_cast<double>(ACC_Z - ACC_Z_OFF) / sensi_acc * GRAVIDADE;
 }
 
+// Atualiza a leitura do sensor integrando o giro no eixo Z
 void MPU6050_leitura::atualiza_leitura() {
-
    while (true) {
         for (etapa etapa_atual = coleta_e_calculo; etapa_atual < invalido; etapa_atual = static_cast<etapa>(etapa_atual + 1)) {
             if (etapa_atual == coleta_e_calculo) {
@@ -177,6 +188,7 @@ void MPU6050_leitura::atualiza_leitura() {
     }
 }
 
+// Calibra o sensor
 void MPU6050_leitura::calibracao_MPU(int16_t* VarX, int16_t* VarY, int16_t* VarZ, int16_t* OffX, int16_t* OffY, int16_t* OffZ, char id, char registrador, int iteracoes) {
     long int contagensX = 0, contagensY = 0, contagensZ = 0;
     for (int i = 0; i < iteracoes; i++) {
@@ -190,10 +202,12 @@ void MPU6050_leitura::calibracao_MPU(int16_t* VarX, int16_t* VarY, int16_t* VarZ
     *OffZ = contagensZ / iteracoes;
 }
 
+// Converte graus para radianos
 float MPU6050_leitura::deg2rad(float degrees) {
     return degrees * M_PI / 180.0;
 }
 
+// Converte radianos para graus
 float MPU6050_leitura::rad2deg(float radians) {
     return radians * 180.0 / M_PI;
 }

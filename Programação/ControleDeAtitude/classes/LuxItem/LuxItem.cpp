@@ -8,7 +8,7 @@ LuxItem::LuxItem(int angulo, int iluminancia) {
 
 // Construtor vazio 
 LuxItem::LuxItem() {
-    this->angulo = -1;
-    this->iluminancia = 0;
+    this->angulo = NULL_LUXITEM;
+    this->iluminancia = NULL_LUXITEM;
 }
 
