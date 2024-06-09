@@ -44,7 +44,7 @@ void BrushlessMotor::acelera(bool estado){
     if(estado)
         tone(pwmPin, velocidadeGiro); // Emite a frequência padrão de giro
     else
-        tone(pwmPin, 0);
+        noTone(pwmPin); // Interrompe a emissão da frequência de giro
 }
 
 // Controla o terminal BREAK de acordo com o argumento

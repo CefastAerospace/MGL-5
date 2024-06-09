@@ -15,7 +15,7 @@ public:
     int16_t GYRO_X, GYRO_Y, GYRO_Z, ACC_X, ACC_Y, ACC_Z; // Contagens LSB do MPU6050
     int16_t GYRO_X_OFF, GYRO_Y_OFF, GYRO_Z_OFF; // Offset/Erro para calibrar
     int16_t ACC_X_OFF, ACC_Y_OFF, ACC_Z_OFF; // Offset/Erro para calibrar
-    double gx, gy, gz; // rad/s em cada eixo
+    double gx, gy, gz; // deg/s em cada eixo
     double acx, acy, acz; // Aceleracao em cada eixo[m/s^2]
     double sensi_acc, sensi_giro; // Sensibilidades do Acelerômetro
 
@@ -33,7 +33,7 @@ public:
     double getAccelerationY();
     double getAccelerationZ();
 
-    double getYaw();
+    int getIntYaw();
 
     // Ler valores do acelerômetro e giroscópio 
     void getMotion6(int16_t *ax, int16_t *ay, int16_t *az, int16_t *gx, int16_t *gy, int16_t *gz);

@@ -122,9 +122,9 @@ double MPU6050_leitura::getAccelerationZ(){
     return this->acz;
 }
 
-// Retorna o valor do Yaw (raotação em torno do eixo Z em radianos)
-double MPU6050_leitura::getYaw(){
-    return this->acumulador_yaw;
+// Retorna o valor inteiro do Yaw (raotação em torno do eixo Z em graus)
+int MPU6050_leitura::getIntYaw(){
+    return static_cast<int>(round(this->acumulador_yaw));;
 }
 
 // Ler todos os valores do acelerômetro e giroscópio
@@ -162,9 +162,14 @@ void MPU6050_leitura::leitura_MPU() {
     leitura_MPU_bruta(&GYRO_X, &GYRO_Y, &GYRO_Z, endereco_mpu, 0x43); // Leitura GYRO
     leitura_MPU_bruta(&ACC_X, &ACC_Y, &ACC_Z, endereco_mpu, 0x3B); // Leitura ACC
 
-    gx = deg2rad((GYRO_X - GYRO_X_OFF) / sensi_giro); // Valores em radianos por segundo
-    gy = deg2rad((GYRO_Y - GYRO_Y_OFF) / sensi_giro);
-    gz = deg2rad((GYRO_Z - GYRO_Z_OFF) / sensi_giro);
+    // gx = deg2rad((GYRO_X - GYRO_X_OFF) / sensi_giro); // Valores em radianos por segundo
+    // gy = deg2rad((GYRO_Y - GYRO_Y_OFF) / sensi_giro);
+    // gz = deg2rad((GYRO_Z - GYRO_Z_OFF) / sensi_giro);
+
+    gx = (GYRO_X - GYRO_X_OFF) / sensi_giro; // Valores em graus por segundo
+    gy = (GYRO_Y - GYRO_Y_OFF) / sensi_giro;
+    gz = (GYRO_Z - GYRO_Z_OFF) / sensi_giro;
+
 
     acx = static_cast<double>(ACC_X - ACC_X_OFF) / sensi_acc * GRAVIDADE; // Valores em m/s^2
     acy = static_cast<double>(ACC_Y - ACC_Y_OFF) / sensi_acc * GRAVIDADE;
@@ -179,7 +184,9 @@ void MPU6050_leitura::atualiza_leitura() {
                 leitura_MPU();
                 tempos[1] = micros() * pow(10, -6);
                 amostras[1] = gz;
-                acumulador_yaw = acumulador_yaw + amostras[0] * (tempos[1] - tempos[0]);
+
+                // Integração do acumulador yaw e restrição de seu valor para [0, 360)
+                acumulador_yaw = fmod((acumulador_yaw + amostras[0] * (tempos[1] - tempos[0])), 360.0);
             } else {
                 tempos[0] = tempos[1];
                 amostras[0] = amostras[1];
