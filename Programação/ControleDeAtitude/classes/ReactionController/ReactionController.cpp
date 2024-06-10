@@ -62,15 +62,14 @@ void ReactionController::leituraAmbiente(){
 // Lê e atualiza o lux do ângulo atual
 void ReactionController::atualizaDados(){
 
-    // TODO: Implementar com o sensor MPU6050 e um fotoresistor
-    // OBS: LuxAtual.angulo deve estar restrito a [0, 360]
-    // O ângulo deve aumentar no sentido ANTI_HORÁRIO
+    // TODO: Implementar com o sensor MPU6050 e um fotosensor
+    // OBS: LuxAtual.angulo deve estar restrito a [0, 359]
+    // O sentido ANTI_HORÁRIO é o de aumento do ângulo
     // Reduzir a velocidade de giro se o intervalo de leitura for muito longo 
 
     sensor.atualiza_leitura();
 
-    // luxAtual.iluminancia = sensor.getIluminancia();
-    // luxAtual.angulo = corrigeAngulo(luxAtual.angulo);
+    // luxAtual.iluminancia = fotoSensor.getIluminancia();
 }
 
 // Verifica se o satélite está posicionado no ângulo fornecido
