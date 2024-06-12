@@ -11,7 +11,7 @@
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
-                "C:\\Aerospace\\MGL-5\\Programação\\Teste Lora(Rádio)\\LoRaReceiver",
+                "C:\\Users\\cefas\\Desktop\\TELEMETRIA\\Satelite2",
                 "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.1-442a798083\\esp32\\qio_qspi\\include",
                 "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.1\\cores\\esp32",
                 "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.1\\variants\\esp32",
@@ -39,7 +39,7 @@
                 "ARDUINO_VARIANT=\"esp32\"",
                 "ARDUINO_PARTITION_default",
                 "ARDUINO_HOST_OS=\"windows\"",
-                "ARDUINO_FQBN=\"esp32:esp32:esp32:JTAGAdapter=default,PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=115200,LoopCore=1,EventsCore=1,DebugLevel=none,EraseFlash=none,ZigbeeMode=default\"",
+                "ARDUINO_FQBN=\"esp32:esp32:esp32:JTAGAdapter=default,PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,LoopCore=1,EventsCore=1,DebugLevel=none,EraseFlash=none,ZigbeeMode=default\"",
                 "ESP32",
                 "CORE_DEBUG_LEVEL=0",
                 "ARDUINO_RUNNING_CORE=1",

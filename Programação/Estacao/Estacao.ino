@@ -1,53 +1,51 @@
 #include <SPI.h>
 #include <LoRa.h>
 
-/* Configuração dos pinos
- *  Modulo | Placa (Esp-32/barramento) | Placa Node MCU (Esp8266) | Arduino Uno
- *  NSS    |   GPIO26                  |  GPIO05                  | D2
- *  MOSI   |   GPIO23(MOSI)            |  GPIO08(MOSI)            | 
- *  MISO   |   GPIO19(MISO)            |  GPIO07(MISO)            | 
- *  SCK    |   GPIO18(SCK)             |  GPIO06(SCK)             |
- *  RST    |   GPIO13                  |  GPIO04                  | D3
- *  DI00   |   GPIO14                  |  GPIO2                   | D4
- *  DI02   |   GPIO05                  |  GPIO0                   |
- */
+#define LORA_SS 10
+#define LORA_RST 9
+#define LORA_DIO0 2
 
-int counter = 0;
-int testinho = 0;
+unsigned long lastSendTime = 0;
+const long interval = 5000; // Intervalo de 5 segundos
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (!Serial);
 
-  Serial.println("LoRa Sender");
+  LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
 
- // LoRa.setPins(10,9,2); // Setano Pinos SS, RST e DI00
-
- if (!LoRa.begin(433E6)) { //Se o módulo não iniciar na frequencia 433Mhz faça:
+  if (!LoRa.begin(433E6)) {
     Serial.println("Starting LoRa failed!");
     while (1);
-  } else {
-    Serial.println("Lora Iniciado");
+  }
+
+  Serial.println("LoRa Initializing OK!");
+}
+
+void loop() {
+  // Verificar se é hora de enviar um comando
+  if (millis() - lastSendTime > interval) {
+    sendCommand();
+    lastSendTime = millis();
+  }
+
+  // Verificar se há pacotes recebidos
+  int packetSize = LoRa.parsePacket();
+  if (packetSize) {
+    String received = "";
+    while (LoRa.available()) {
+      received += (char)LoRa.read();
+    }
+    Serial.print("Recebido: ");
+    Serial.println(received);
   }
 }
 
-
-void loop() {
-  Serial.print("Sending packet: ");
-  Serial.println(counter);
-
-  // send packet
+void sendCommand() {
+  String mensagemEnviar = "CMD: Ajuste Angulacao"; // Exemplo de comando
   LoRa.beginPacket();
-  LoRa.print("hello ");
-  LoRa.print(counter);
-  if(testinho%10 == 0){
-  LoRa.print(" // teste+2 ");
-  LoRa.print(testinho);
-  }
+  LoRa.print(mensagemEnviar);
   LoRa.endPacket();
-
-  counter++;
-  testinho+=2;
-
-  delay(5000);
+  Serial.print("Enviado: ");
+  Serial.println(mensagemEnviar);
 }

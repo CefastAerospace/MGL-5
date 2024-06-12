@@ -17,7 +17,6 @@ void setup() {
 
   pinMode(BUZZER_PIN, OUTPUT);
 
-
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DIO0);
 
   if (!LoRa.begin(433E6)) {
