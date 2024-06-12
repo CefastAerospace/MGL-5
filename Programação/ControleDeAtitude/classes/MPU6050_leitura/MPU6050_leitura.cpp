@@ -178,19 +178,17 @@ void MPU6050_leitura::leitura_MPU() {
 
 // Atualiza a leitura do sensor integrando o giro no eixo Z
 void MPU6050_leitura::atualiza_leitura() {
-   while (true) {
-        for (etapa etapa_atual = coleta_e_calculo; etapa_atual < invalido; etapa_atual = static_cast<etapa>(etapa_atual + 1)) {
-            if (etapa_atual == coleta_e_calculo) {
-                leitura_MPU();
-                tempos[1] = micros() * pow(10, -6);
-                amostras[1] = gz;
+    for (etapa etapa_atual = coleta_e_calculo; etapa_atual < invalido; etapa_atual = static_cast<etapa>(etapa_atual + 1)) {
+        if (etapa_atual == coleta_e_calculo) {
+            leitura_MPU();
+            tempos[1] = micros() * pow(10, -6);
+            amostras[1] = gz;
 
-                // Integração do acumulador yaw e restrição de seu valor para [0, 360)
-                acumulador_yaw = fmod((acumulador_yaw + amostras[0] * (tempos[1] - tempos[0])), 360.0);
-            } else {
-                tempos[0] = tempos[1];
-                amostras[0] = amostras[1];
-            }
+            // Integração do acumulador yaw e restrição de seu valor para (-360, 360)
+            acumulador_yaw = fmod((acumulador_yaw + amostras[0] * (tempos[1] - tempos[0])), 360.0);
+        } else {
+            tempos[0] = tempos[1];
+            amostras[0] = amostras[1];
         }
     }
 }
