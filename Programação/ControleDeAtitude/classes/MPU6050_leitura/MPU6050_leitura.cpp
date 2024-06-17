@@ -11,7 +11,7 @@
 #define GRAVIDADE 9.80665
 
 // Construtor
-MPU6050_leitura::MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_off, char endereco, char acc_sensi, int_least16_t giro_sensi) :
+MPU6050_leitura::MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_off, char endereco) :
     ACC_X_OFF(acx_off),
     ACC_Y_OFF(acy_off),         // Inicialização das variáveis
     ACC_Z_OFF(acz_off),
@@ -21,17 +21,35 @@ MPU6050_leitura::MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_o
     acumulador_yaw(0),
     endereco_mpu(endereco) 
 {
+    
+//     // Métodos de inicialização
+//     prepara_wire();
+//     set_config_energia();
+//     set_sensi_giro(giro_sensi);
+//     set_sensi_acc(acc_sensi);
+//     set_filters();
+//     calibracao_MPU(&GYRO_X, &GYRO_Y, &GYRO_Z, &GYRO_X_OFF, &GYRO_Y_OFF, &GYRO_Z_OFF, endereco_mpu, 0x43, 100); // Calibracao GYRO
+ }
+
+void MPU6050_leitura::inicializa(char acc_sensi, int_least16_t giro_sensi){
     // Métodos de inicialização
     prepara_wire();
+  
     set_config_energia();
+
     set_sensi_giro(giro_sensi);
+    
     set_sensi_acc(acc_sensi);
+
     set_filters();
+   
     calibracao_MPU(&GYRO_X, &GYRO_Y, &GYRO_Z, &GYRO_X_OFF, &GYRO_Y_OFF, &GYRO_Z_OFF, endereco_mpu, 0x43, 100); // Calibracao GYRO
+   
 }
 
 // Prepara o barramento I2C
 void MPU6050_leitura::prepara_wire(){
+    Serial.begin(115200);
     Wire.setClock(100000); // Clock I2C em 100kHz
     Wire.begin(); // Configuração do I2C, Pinos GPIO22(SCL), GPIO21(SDA)
     delay(1000); // Delay para que MPU6050 funcione
@@ -183,7 +201,9 @@ void MPU6050_leitura::atualiza_leitura() {
             leitura_MPU();
             tempos[1] = micros() * pow(10, -6);
             amostras[1] = gz;
-
+            Serial.print("Yaw Acumulado=");
+            Serial.println(gz);
+                
             // Integração do acumulador yaw e restrição de seu valor para (-360, 360)
             acumulador_yaw = fmod((acumulador_yaw + amostras[0] * (tempos[1] - tempos[0])), 360.0);
         } else {
