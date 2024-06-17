@@ -13,7 +13,7 @@ Neotimer timer; // Temporizador
 int angulo;
 
 void setup() {
-  controller.inicializaSensor(16, 500);
+  controller.inicializaSensor(16, 500); // Inicializa o sensor
   controller.setVelocidadeGiro(VELOCIDADE);  // Define a velocidade de giro do motor por meio da frequência
   controller.setToleranciaAngulo(5);  // Define a tolerância de 5 graus para o ângulo no qual o motor é considerado estabilizado
   
