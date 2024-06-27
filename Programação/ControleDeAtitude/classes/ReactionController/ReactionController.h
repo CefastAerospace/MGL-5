@@ -15,7 +15,7 @@ class ReactionController {
 
         // Métodos públicos
         ReactionController(int pwmPin, int startPin, int breakPin, int directionPin); // Construtor
-        ReactionController();  // Construtor vazio
+        //ReactionController();  // Construtor vazio
         void setMotorPins(int pwmPin, int startPin, int breakPin, int directionPin);
         void leituraAmbiente();
         void atualizaDados();
@@ -24,6 +24,7 @@ class ReactionController {
         void setSensibilidadeAcc(char sensibilidade);
         void setSensibilidadeGiro(int_least16_t sensibilidade);
         bool estabilizado(int angulo);
+        void inicializaSensor(char acc_sensi, int_least16_t giro_sensi);
 
     private:
         // Atributos privados

@@ -3,22 +3,25 @@
 // Construtor
 ReactionController::ReactionController(int pwmPin, int startPin, int breakPin, int directionPin) :
     // Lista de inicialização dos membros
-    sensor(73, -55, 44, MPU6050_ADDR, 16, 500), // Tres numeros sao os offsets do acc, depois o endereco do Mpu, Sensibilidade Acc=16G,Sensibilidade Giro=500,
+    sensor(73, -55, 44, MPU6050_ADDR), // Tres numeros sao os offsets do acc, depois o endereco do Mpu, Sensibilidade Acc=16G,Sensibilidade Giro=500,
     motor(pwmPin, startPin, breakPin, directionPin),
-    luxList(),
-    luxAtual(),
+    //luxList(),
+    //luxAtual(),
     toleranciaAngulo(5) // Tolerância padrão de 5 graus
 {}
 
 // Construtor vazio
-ReactionController::ReactionController() :
-    sensor(73, -55, 44, MPU6050_ADDR, 16, 500), // Tres numeros sao os offsets do acc, depois o endereco do Mpu, Sensibilidade Acc=16G,Sensibilidade Giro=500,
-    motor(),
-    luxList(),
-    luxAtual(),
-    toleranciaAngulo(5) // Tolerância padrão de 5 graus
-{}
-
+// ReactionController::ReactionController() :
+//     sensor(73, -55, 44, MPU6050_ADDR, 16, 500), // Tres numeros sao os offsets do acc, depois o endereco do Mpu, Sensibilidade Acc=16G,Sensibilidade Giro=500,
+//     motor(),
+//     luxList(),
+//     luxAtual(),
+//     toleranciaAngulo(5) // Tolerância padrão de 5 graus
+// {}
+void ReactionController::inicializaSensor(char acc_sensi, int_least16_t giro_sensi){
+    sensor.inicializa(acc_sensi, giro_sensi);
+   
+}
 // Configura a sensibilidade do acelerômetro
 void ReactionController::setSensibilidadeAcc(char sensibilidade){
     sensor.set_sensi_acc(sensibilidade);

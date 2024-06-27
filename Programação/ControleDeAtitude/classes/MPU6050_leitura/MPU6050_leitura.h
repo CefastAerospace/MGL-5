@@ -20,10 +20,11 @@ public:
     double sensi_acc, sensi_giro; // Sensibilidades do Acelerômetro
 
 
-    MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_off, char endereco, char acc_sensi, int_least16_t giro_sensi);
+    MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_off, char endereco);
     void atualiza_leitura();
     void set_sensi_acc(char acc_sensi);
     void set_sensi_giro(int_least16_t giro_sensi);
+    void inicializa(char acc_sensi, int_least16_t giro_sensi);
 
     double getRotationX();
     double getRotationY();
