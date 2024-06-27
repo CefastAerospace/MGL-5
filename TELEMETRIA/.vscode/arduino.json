@@ -1,6 +1,7 @@
 {
-    "port": "COM14",
+    "port": "COM6",
     "board": "esp32:esp32:esp32",
-    "sketch": "Satelite2\\Satelite2.ino",
-    "configuration": "JTAGAdapter=default,PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,LoopCore=1,EventsCore=1,DebugLevel=none,EraseFlash=none,ZigbeeMode=default"
+    "sketch": "Estacao2\\Estacao2.ino",
+    "configuration": "JTAGAdapter=default,PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,LoopCore=1,EventsCore=1,DebugLevel=none,EraseFlash=none,ZigbeeMode=default",
+    "programmer": "esptool"
 }
