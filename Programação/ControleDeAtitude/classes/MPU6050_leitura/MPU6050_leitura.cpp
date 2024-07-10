@@ -19,6 +19,7 @@ MPU6050_leitura::MPU6050_leitura(int16_t acx_off, int16_t acy_off, int16_t acz_o
     acx(0), acy(0), acz(0),
     tempos{0, 0}, amostras{0, 0},
     acumulador_yaw(0),
+    compass(0),
     endereco_mpu(endereco) 
 {
     
@@ -140,7 +141,7 @@ double MPU6050_leitura::getAccelerationZ(){
     return this->acz;
 }
 
-// Retorna o valor inteiro do Yaw (raotação em torno do eixo Z em graus)
+// Retorna o valor inteiro do Yaw (rotação em torno do eixo Z em graus)
 int MPU6050_leitura::getIntYaw(){
     return static_cast<int>(round(this->acumulador_yaw));;
 }
@@ -184,9 +185,9 @@ void MPU6050_leitura::leitura_MPU() {
     // gy = deg2rad((GYRO_Y - GYRO_Y_OFF) / sensi_giro);
     // gz = deg2rad((GYRO_Z - GYRO_Z_OFF) / sensi_giro);
 
-    gx = (GYRO_X - GYRO_X_OFF) / sensi_giro; // Valores em graus por segundo
-    gy = (GYRO_Y - GYRO_Y_OFF) / sensi_giro;
-    gz = (GYRO_Z - GYRO_Z_OFF) / sensi_giro;
+    gx = deg2rad((GYRO_X - GYRO_X_OFF) / sensi_giro); // Valores em graus por segundo
+    gy = deg2rad((GYRO_Y - GYRO_Y_OFF) / sensi_giro);
+    gz = deg2rad((GYRO_Z - GYRO_Z_OFF) / sensi_giro);
 
 
     acx = static_cast<double>(ACC_X - ACC_X_OFF) / sensi_acc * GRAVIDADE; // Valores em m/s^2
@@ -202,10 +203,11 @@ void MPU6050_leitura::atualiza_leitura() {
             tempos[1] = micros() * pow(10, -6);
             amostras[1] = gz;
             Serial.print("Yaw Acumulado=");
-            Serial.println(gz);
+            Serial.println(rad2deg(compass));
                 
             // Integração do acumulador yaw e restrição de seu valor para (-360, 360)
-            acumulador_yaw = fmod((acumulador_yaw + amostras[0] * (tempos[1] - tempos[0])), 360.0);
+            acumulador_yaw = fmod((acumulador_yaw + amostras[0] * (tempos[1] - tempos[0])), 2*M_PI);
+            compass = acumulador_yaw > 0 ? 2*M_PI - acumulador_yaw : acumulador_yaw * (-1);
         } else {
             tempos[0] = tempos[1];
             amostras[0] = amostras[1];

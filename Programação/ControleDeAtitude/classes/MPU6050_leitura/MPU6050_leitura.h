@@ -45,6 +45,7 @@ private:
     double tempos[2];
     double amostras[2];
     double acumulador_yaw;
+    double compass;
 
     void prepara_wire();
     void set_config_energia();

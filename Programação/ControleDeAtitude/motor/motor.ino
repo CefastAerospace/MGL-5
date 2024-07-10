@@ -1,10 +1,10 @@
 #include <ReactionController.h> // Biblioteca para controle do motor
 #include <neotimer.h>  // Biblioteca para controle de tempo
 
-#define DIRECTION 2
-#define BREAK 3
-#define START 4
-#define PWM 5
+#define DIRECTION 16
+#define BREAK 17
+#define START 18
+#define PWM 19
 #define VELOCIDADE 18000  // Frequência de giro padrão do motor: 18KHz = 2700rpm
 
 ReactionController controller(PWM, START, BREAK, DIRECTION);
