@@ -42,7 +42,7 @@ void MPU6050_leitura::inicializa(char acc_sensi, int_least16_t giro_sensi){
     set_sensi_acc(acc_sensi);
 
     set_filters();
-   
+    delay(2000);
     calibracao_MPU(&GYRO_X, &GYRO_Y, &GYRO_Z, &GYRO_X_OFF, &GYRO_Y_OFF, &GYRO_Z_OFF, endereco_mpu, 0x43, 100); // Calibracao GYRO
    
 }

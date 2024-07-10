@@ -20,8 +20,8 @@ ReactionController::ReactionController(int pwmPin, int startPin, int breakPin, i
 // {}
 void ReactionController::inicializaSensor(char acc_sensi, int_least16_t giro_sensi){
     sensor.inicializa(acc_sensi, giro_sensi);
-   
 }
+
 // Configura a sensibilidade do acelerômetro
 void ReactionController::setSensibilidadeAcc(char sensibilidade){
     sensor.set_sensi_acc(sensibilidade);

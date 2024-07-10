@@ -6,7 +6,7 @@
 #include <BrushlessMotor.h>
 #include <MPU6050_leitura.h>
 
-#define MPU6050_ADDR 0x69
+#define MPU6050_ADDR 0x68
 
 class ReactionController {
     public:
