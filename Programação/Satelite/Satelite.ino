@@ -114,7 +114,7 @@ void printBMP280(){
   Serial.print(bmp.readTemperature());
   Serial.println(" *C");
 
-  //Imprimindo os valores de Pressão
+  //Imprimindo os valores de Pressão.
   Serial.print(F("Pressão = "));
   Serial.print(bmp.readPressure());
   Serial.println(" Pa");
