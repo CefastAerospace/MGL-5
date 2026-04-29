@@ -1,16 +1,11 @@
 /*
-  LoRa Duplex communication wth callback
-
-  Sends a message every half second, and uses callback
-  for new incoming messages. Implements a one-byte addressing scheme,
-  with 0xFF as the broadcast address.
-
-  Note: while sending, LoRa radio is not listening for incoming messages.
-  Note2: when using the callback method, you can't use any of the Stream
-  functions that rely on the timeout, such as readString, parseInt(), etc.
-
-  created 28 April 2017
-  by Tom Igoe
+  Pinagem do LoRa:
+  MOSI: 23
+  MISO: 19
+  SCK: 18
+  CS: 5
+  Reset: 27
+  IRQ(DI00): 4
 */
 #include <SPI.h>              // include libraries
 #include <LoRa.h>
