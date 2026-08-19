@@ -22,8 +22,8 @@ const uint8_t GREEN = 2;
 const uint8_t BLUE = 3;
 const uint8_t WHITE = 4;
 const uint8_t PURPLE = 5;
-const char* ssid     = "COVID_20";
-const char* password = "1c75a33b210";
+const char* ssid     = "Aerosoace-Net";
+const char* password = "4V0bOb391@JF";
 uint16_t mcpState = 0;
 
 WiFiServer server(80);
