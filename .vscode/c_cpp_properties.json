@@ -12,10 +12,10 @@
             "intelliSenseMode": "gcc-x64",
             "includePath": [
                 "C:\\Aerospace\\MGL-5\\Programação\\Teste Lora(Rádio)\\LoRaReceiver",
-                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.1-442a798083\\esp32\\qio_qspi\\include",
-                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.1\\cores\\esp32",
-                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.1\\variants\\esp32",
-                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.1\\libraries\\SPI\\src",
+                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.1-b6b4727c58\\esp32\\qio_qspi\\include",
+                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.4\\cores\\esp32",
+                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.4\\variants\\esp32",
+                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.4\\libraries\\SPI\\src",
                 "C:\\Users\\cefas\\Documents\\Arduino\\libraries\\LoRa\\src",
                 "c:\\users\\cefas\\appdata\\local\\arduino15\\packages\\esp32\\tools\\esp-x32\\2302\\xtensa-esp32-elf\\include\\c++\\12.2.0",
                 "c:\\users\\cefas\\appdata\\local\\arduino15\\packages\\esp32\\tools\\esp-x32\\2302\\xtensa-esp32-elf\\include\\c++\\12.2.0\\xtensa-esp32-elf",
@@ -26,7 +26,7 @@
                 "c:\\users\\cefas\\appdata\\local\\arduino15\\packages\\esp32\\tools\\esp-x32\\2302\\xtensa-esp32-elf\\include"
             ],
             "forcedInclude": [
-                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.1\\cores\\esp32\\Arduino.h"
+                "C:\\Users\\cefas\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.0.4\\cores\\esp32\\Arduino.h"
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",
